@@ -24,3 +24,14 @@ Route::prefix('allowance')
     Route::get('/{allowance} ', 'get');
     Route::delete('/{allowance} ', 'destroy');
 });
+
+// Allowance
+Route::prefix('salary-cuts')
+->controller(MS\SalaryCutsController::class)
+->group(function () {
+    Route::get('/', 'index');
+    Route::post('/', 'store');
+    Route::put('/{salaryCuts} ', 'update');
+    Route::get('/{salaryCuts} ', 'get');
+    Route::delete('/{salaryCuts} ', 'destroy');
+});
