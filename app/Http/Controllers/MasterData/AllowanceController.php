@@ -56,7 +56,7 @@ class AllowanceController extends Controller
             'allowance_amount' => $payload['amount'],
         ]);
 
-        $this->messages = "Data berhasil disimpan.";
+        $this->message = "Data berhasil disimpan.";
         return $this->sendResponse();        
     }
 
@@ -72,14 +72,14 @@ class AllowanceController extends Controller
         $allowance->allowance_amount = $payload['amount'];
         $allowance->save();
 
-        $this->messages = "Data berhasil diupdate.";
+        $this->message = "Data berhasil diupdate.";
         return $this->sendResponse();  
     }
 
     public function destroy(MasterAllowance $allowance)
     {
         $allowance->delete();
-        $this->messages = "Data berhasil dihapus.";
+        $this->message = "Data berhasil dihapus.";
         return $this->sendResponse();  
     }
 }

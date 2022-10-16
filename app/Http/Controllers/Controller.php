@@ -14,13 +14,13 @@ class Controller extends BaseController
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
     protected $statusCode = 200;
-    protected $messages = "success";
+    protected $message = "success";
     protected $data = null;
     protected $error = null;
 
     protected function sendErrorResponse($message = '') {
         $this->statusCode = 500;
-        $this->messages = $message;
+        $this->message = $message;
 
         return $this->sendResponse();
     }
@@ -28,18 +28,18 @@ class Controller extends BaseController
     protected function sendResponse() {
         return response()
         ->json([
-            'messages' => $this->messages,
+            'message' => $this->message,
             'data' => $this->data,
             'error' => $this->error,
         ], $this->statusCode );
     }
 
-    public function validatingRequest(Request $request, $rules, $customMessages = []) {
-        $validator = Validator::make($request->all(), $rules, $customMessages);
+    public function validatingRequest(Request $request, $rules, $custommessage = []) {
+        $validator = Validator::make($request->all(), $rules, $custommessage);
 
         if ($validator->fails()) {
             $this->error = $validator->errors()->all();
-            $this->messages = "VALIDATION_ERROR";
+            $this->message = "VALIDATION_ERROR";
         }
         
         return $validator;

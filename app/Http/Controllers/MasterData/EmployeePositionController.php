@@ -57,7 +57,7 @@ class EmployeePositionController extends Controller
             'position_salary' => $payload['salary'],
         ]);
 
-        $this->messages = "Data berhasil disimpan.";
+        $this->message = "Data berhasil disimpan.";
         return $this->sendResponse();        
     }
 
@@ -76,14 +76,14 @@ class EmployeePositionController extends Controller
         $employeePosition->position_salary = $payload['salary'];
         $employeePosition->save();
 
-        $this->messages = "Data berhasil diupdate.";
+        $this->message = "Data berhasil diupdate.";
         return $this->sendResponse();  
     }
 
     public function destroy(EmployeePosition $employeePosition)
     {
         $employeePosition->delete();
-        $this->messages = "Data berhasil dihapus.";
+        $this->message = "Data berhasil dihapus.";
         return $this->sendResponse();  
     }
 }

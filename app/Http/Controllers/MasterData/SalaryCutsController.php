@@ -56,7 +56,7 @@ class SalaryCutsController extends Controller
             'salary_cuts_amount' => $payload['amount'],
         ]);
 
-        $this->messages = "Data berhasil disimpan.";
+        $this->message = "Data berhasil disimpan.";
         return $this->sendResponse();        
     }
 
@@ -72,14 +72,14 @@ class SalaryCutsController extends Controller
         $salaryCuts->salary_cuts_amount = $payload['amount'];
         $salaryCuts->save();
 
-        $this->messages = "Data berhasil diupdate.";
+        $this->message = "Data berhasil diupdate.";
         return $this->sendResponse();  
     }
 
     public function destroy(MasterSalaryCuts $salaryCuts)
     {
         $salaryCuts->delete();
-        $this->messages = "Data berhasil dihapus.";
+        $this->message = "Data berhasil dihapus.";
         return $this->sendResponse();  
     }
 }
