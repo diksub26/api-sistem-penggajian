@@ -18,9 +18,10 @@ return new class extends Migration
             $table->charset = 'utf8mb4';
             $table->collation = 'utf8mb4_unicode_ci';
 
-            $table->uuid('id');
+            $table->id();
             $table->string("salary_cuts_name");
-            $table->integer("salary_cuts_amount");
+            $table->float("salary_cuts_amount");
+            $table->enum('salary_cuts_type', ['amount', 'percentage']);
             $table->timestamps();
         });
     }

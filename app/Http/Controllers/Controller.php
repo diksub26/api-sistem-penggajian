@@ -48,11 +48,13 @@ class Controller extends BaseController
     protected function dbTransaction( $callback ){
         DB::beginTransaction();
         try {
-            $callback();
+            $val = $callback();
             DB::commit();
         } catch (\Exception $e) {
             DB::rollback();
-            $this->sendErrorResponse($e->getMessage());
+            return $this->sendErrorResponse($e->getMessage());
         }
+
+        if(isset($val)) return $val;
     }
 }

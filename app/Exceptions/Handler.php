@@ -59,5 +59,16 @@ class Handler extends ExceptionHandler
                 ], 404);
             }
         });
+
+        $this->renderable(function (Throwable $e, Request $request)
+        {
+            if($request->wantsJson()) {
+                return response()->json([
+                    'message' => $e->getMessage(),
+                    'data' => null,
+                    'error' => null
+                ], 500);
+            }
+        });
     }
 }

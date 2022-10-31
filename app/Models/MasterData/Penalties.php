@@ -5,9 +5,9 @@ namespace App\Models\MasterData;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class MasterAllowance extends Model
+class Penalties extends Model
 {
     use HasFactory;
 
-    protected $guarded = [];
+    protected $fillable = ['penalty_name', 'penalty_amount'];
 }
