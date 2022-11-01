@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Common\AuthController;
 use App\Http\Controllers\EmployeeController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -15,13 +16,19 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+Route::prefix("auth")
+->controller(AuthController::class)
+->group(function() {
+    Route::post('/login', 'loginAttempt');
+    Route::middleware('auth:sanctum')->get('/me', 'info');
+    Route::middleware('auth:sanctum')->get('/logout', 'logout');
+    Route::middleware('auth:sanctum')->get('/logout-all', 'logoutAllDevice');
 });
 
+Route::group(["prefix" => "/master-data", "middleware" => 'auth:sanctum'],__DIR__."/master-data.php");
 
-Route::group(["prefix" => "/master-data"],__DIR__."/master-data.php");
 Route::prefix("employee")
+->middleware('auth:sanctum')
 ->controller(EmployeeController::class)
 ->group(function() {
     Route::post('/', 'store');

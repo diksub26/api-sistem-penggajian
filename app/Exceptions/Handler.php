@@ -2,6 +2,8 @@
 
 namespace App\Exceptions;
 
+use Illuminate\Auth\AuthenticationException;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -52,23 +54,20 @@ class Handler extends ExceptionHandler
         $this->renderable(function (NotFoundHttpException $e, Request $request)
         {
             if($request->wantsJson()) {
-                return response()->json([
-                    'message' => "Data tidak ditemukan.",
-                    'data' => null,
-                    'error' => null
-                ], 404);
+                $message = 'Not Found.';
+                if ($e->getPrevious() instanceof ModelNotFoundException) $message = 'Data tidak ditemukan.';
+                return response()->json([ 'message' => $message, 'data' => null, 'error' => null ], 404);
             }
+        });
+
+        $this->renderable(function (AuthenticationException $e, Request $request)
+        {
+            if($request->wantsJson()) return response()->json([ 'message' => $e->getMessage(), 'data' => null, 'error' => null ], 401);
         });
 
         $this->renderable(function (Throwable $e, Request $request)
         {
-            if($request->wantsJson()) {
-                return response()->json([
-                    'message' => $e->getMessage(),
-                    'data' => null,
-                    'error' => null
-                ], 500);
-            }
+            if($request->wantsJson()) return response()->json([ 'message' => $e->getMessage(), 'data' => null, 'error' => null ], 500);
         });
     }
 }
