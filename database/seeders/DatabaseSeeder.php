@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -25,7 +26,7 @@ class DatabaseSeeder extends Seeder
             EmployeePositionSeeder::class,
             MasterAllowanceSeeder::class,
             MasterSalaryCutsSeeder::class,
-            Penalties::class,
+            SettingSeeder::class,
             EmployeeSeeder::class
         ]);
     }

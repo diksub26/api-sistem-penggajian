@@ -2,11 +2,11 @@
 
 namespace Database\Seeders;
 
-use App\Models\MasterData\Penalties as MasterDataPenalties;
+use App\Models\MasterData\Setting;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class Penalties extends Seeder
+class SettingSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -15,10 +15,14 @@ class Penalties extends Seeder
      */
     public function run()
     {
-        MasterDataPenalties::create(
+        Setting::create(
             [
-                'penalty_name' => 'Kesiangan',
-                'penalty_amount' => '10000'
+                'name' => 'Denda Terlambat',
+                'value' => '10000'
+            ],
+            [
+                'name' => 'Fee Lembur',
+                'value' => '10000'
             ]
         );
     }
