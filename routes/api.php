@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Attendance\LeaveController;
+use App\Http\Controllers\Attendance\OvertimeController;
 use App\Http\Controllers\Common\AuthController;
 use App\Http\Controllers\EmployeeController;
 use Illuminate\Support\Facades\Route;
@@ -53,5 +54,15 @@ Route::prefix("leave")
     Route::post('/', 'create');
     Route::put('/status/{leave} ', 'updateStatus');
     Route::get('/{leave}', 'getById');
+    Route::get('/', 'get');
+});
+
+Route::prefix("overtime")
+->middleware('auth:sanctum')
+->controller(OvertimeController::class)
+->group(function() {
+    Route::post('/', 'create');
+    Route::put('/status/{overtime} ', 'updateStatus');
+    Route::get('/{overtime}', 'getById');
     Route::get('/', 'get');
 });
