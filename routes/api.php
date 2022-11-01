@@ -1,8 +1,8 @@
 <?php
 
+use App\Http\Controllers\Attendance\LeaveController;
 use App\Http\Controllers\Common\AuthController;
 use App\Http\Controllers\EmployeeController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -44,4 +44,14 @@ Route::prefix("employee")
     Route::post('/add-salary-cut/{employee}', 'addSalaryCut');
     Route::get('/get-salary-cut/{employee}', 'getSalaryCut');
     Route::delete('/delete-salary-cut/{salaryCut} ', 'destroySalaryCut');
+});
+
+Route::prefix("leave")
+->middleware('auth:sanctum')
+->controller(LeaveController::class)
+->group(function() {
+    Route::post('/', 'create');
+    Route::put('/status/{leave} ', 'updateStatus');
+    Route::get('/{leave}', 'getById');
+    Route::get('/', 'get');
 });
