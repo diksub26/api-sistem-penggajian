@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Attendance\AttendanceController;
 use App\Http\Controllers\Attendance\LeaveController;
 use App\Http\Controllers\Attendance\OvertimeController;
 use App\Http\Controllers\Common\AuthController;
@@ -64,5 +65,13 @@ Route::prefix("overtime")
     Route::post('/', 'create');
     Route::put('/status/{overtime} ', 'updateStatus');
     Route::get('/{overtime}', 'getById');
+    Route::get('/', 'get');
+});
+
+Route::prefix("attendance")
+->middleware('auth:sanctum')
+->controller(AttendanceController::class)
+->group(function() {
+    Route::post('/', 'importFormExcel');
     Route::get('/', 'get');
 });
