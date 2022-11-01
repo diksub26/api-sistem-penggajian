@@ -23,6 +23,10 @@ class SettingSeeder extends Seeder
             [
                 'name' => 'Fee Lembur',
                 'value' => '10000'
+            ],
+            [
+                'name' => 'Tgl Cut off',
+                'value' => '20'
             ]
         );
     }
