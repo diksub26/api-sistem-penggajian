@@ -24,6 +24,7 @@ return new class extends Migration
             $table->date('end_leave');
             $table->uuid('manager_id');
             $table->text('reason');
+            $table->tinyInteger('amount');
             $table->tinyInteger('type');
             $table->tinyInteger('status');
             $table->timestamps();

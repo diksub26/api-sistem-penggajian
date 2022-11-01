@@ -13,7 +13,7 @@ class Leave extends Model
 
     protected $fillable = [
         'employee_id', 'start_leave', 'end_leave', 'manager_id', 'reason',
-        'type', 'status'
+        'type', 'status', 'amount'
     ];
 
     public function employee()

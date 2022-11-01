@@ -21,8 +21,16 @@ class LeaveController extends Controller
         if($payload->fails()) return $this->sendResponse();
 
         $payload = $payload->validated();
+        $startDate = new DateTime($payload['startDate']);
+        $endDate = new DateTime($payload['endDate']);
+        $interval = $startDate->diff($endDate);
+        $amount = $interval->format('%a');
+
+        if($amount < 1) $amount = 1;
+
         Leave::create([
             'employee_id' => $request->user()->employee_id,
+            'amount' => $payload['amount'],
             'start_leave' => $payload['startDate'],
             'end_leave' => $payload['endDate'],
             'manager_id' => $payload['manager'],
@@ -80,6 +88,7 @@ class LeaveController extends Controller
                 'type' => config('common.leaveType.'. $val->type),
                 'startDate' => $val->start_leave,
                 'endDate' => $val->end_leave,
+                'amount' => $val->amount,
             ];
         }
 
@@ -97,6 +106,7 @@ class LeaveController extends Controller
             'type' => config('common.leaveType.'. $leave->type),
             'startDate' => $leave->start_leave,
             'endDate' => $leave->end_leave,
+            'amount' => $leave->amount,
         ];
 
         return $this->sendResponse();
