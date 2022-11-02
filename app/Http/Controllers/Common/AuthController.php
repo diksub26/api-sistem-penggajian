@@ -28,17 +28,24 @@ class AuthController extends Controller
 
     public function info(Request $request)
     {
-        $request->user()->currentAccessToken()->delete();
-        $this->_setData($request);
+        $now = new \DateTime('now');
+        $diffInHours = $now->diff($request->user()->currentAccessToken()->created_at)->h;
+        $token = str_replace("Bearer ", '', $request->header('Authorization'));
+
+        if($diffInHours >= 12 ) {
+            $request->user()->currentAccessToken()->delete();
+            $token = null;
+        }
+        $this->_setData($request, $token);
         return $this->sendResponse();
     }
 
-    public function _setData(Request $request)
+    public function _setData(Request $request, $token = null)
     {
         $user = $request->user();
         $dataEmployee = $user->employee;
         $this->data = [
-            'token' => $user->createToken("devkotes", [$user->role])->plainTextToken,
+            'token' => $token == null ? $user->createToken("devkotes", [$user->role])->plainTextToken : $token,
             'role' => $user->role,
             'email' => $user->email,
             'fullname' => $dataEmployee->fullname,
