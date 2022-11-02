@@ -23,7 +23,7 @@ Route::prefix("auth")
 ->group(function() {
     Route::post('/login', 'loginAttempt');
     Route::middleware('auth:sanctum')->get('/me', 'info');
-    Route::middleware('auth:sanctum')->get('/logout', 'logout');
+    Route::get('/logout', 'logout');
     Route::middleware('auth:sanctum')->get('/logout-all', 'logoutAllDevice');
 });
 
