@@ -36,8 +36,10 @@ Route::prefix("employee")
     Route::post('/', 'store');
     Route::put('/{employee} ', 'update');
     Route::get('/full-info/{employee} ', 'getFullInfo');
-    Route::get('/{employee} ', 'get');
-    Route::delete('/{employee} ', 'destroy');
+    Route::get('/', 'get');
+    Route::get('/{employee}', 'getByUUID');
+    Route::get('/{employee}', 'get');
+    Route::delete('/{employee}', 'destroy');
 
     Route::post('/add-allowance/{employee}', 'addAllowance');
     Route::get('/get-allowance/{employee}', 'getAllowance');

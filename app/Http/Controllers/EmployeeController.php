@@ -106,7 +106,35 @@ class EmployeeController extends Controller
         });
     }
 
-    public function get(Employee $employee)
+    public function get(Request $request)
+    {
+        $employes = Employee::with('user')
+        ->with('position')
+        ->orderBy('updated_at', 'desc')->get();
+
+        foreach ($employes as $employee) {
+            $this->data[]= [
+                'noInduk' => $employee->no_induk,
+                'fullname' => $employee->fullname,
+                'gender' => $employee->gender,
+                'placeOfBirth' => $employee->place_of_birth,
+                'dob' => $employee->dob,
+                'address' => $employee->address,
+                'religion' => $employee->religion,
+                'noHp' => $employee->no_hp,
+                'assignmentDate' => $employee->assignment_date,
+                'division' => $employee->division,
+                'functionalSalary' => $employee->functional_salary,
+                'email' => $employee->user->email,
+                'role' => $employee->user->role,
+                'employeePositionId' => $employee->position->employee_position_id,
+            ];
+        }
+
+        return $this->sendResponse(); 
+    }
+
+    public function getByUUID(Employee $employee)
     {
         $this->data = [
             'noInduk' => $employee->no_induk,
@@ -122,7 +150,7 @@ class EmployeeController extends Controller
             'functionalSalary' => $employee->functional_salary,
             'email' => $employee->user->email,
             'role' => $employee->user->role,
-            'employeePositionId' => $employee->user->employee_position_id,
+            'employeePositionId' => $employee->position->employee_position_id,
         ];
 
         return $this->sendResponse(); 
