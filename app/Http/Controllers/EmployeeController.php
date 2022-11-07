@@ -128,6 +128,7 @@ class EmployeeController extends Controller
                 'email' => $employee->user->email,
                 'role' => $employee->user->role,
                 'employeePositionId' => $employee->position->employee_position_id,
+                'employeePosition' => $employee->position->position_name,
             ];
         }
 
@@ -151,6 +152,7 @@ class EmployeeController extends Controller
             'email' => $employee->user->email,
             'role' => $employee->user->role,
             'employeePositionId' => $employee->position->employee_position_id,
+            'employeePosition' => $employee->position->position_name,
         ];
 
         return $this->sendResponse(); 
