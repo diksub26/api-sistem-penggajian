@@ -37,6 +37,7 @@ Route::prefix("employee")
     Route::put('/{employee} ', 'update');
     Route::get('/full-info/{employee} ', 'getFullInfo');
     Route::get('/', 'get');
+    Route::get('/manager', 'getManager');
     Route::get('/{employee}', 'getByUUID');
     Route::delete('/{employee}', 'destroy');
 
@@ -46,7 +47,8 @@ Route::prefix("employee")
 
     Route::post('/add-salary-cut/{employee}', 'addSalaryCut');
     Route::get('/get-salary-cut/{employee}', 'getSalaryCut');
-    Route::delete('/delete-salary-cut/{salaryCut} ', 'destroySalaryCut');
+    Route::delete('/delete-salary-cut/{salaryCut}', 'destroySalaryCut');
+
 });
 
 Route::prefix("leave")
@@ -57,6 +59,7 @@ Route::prefix("leave")
     Route::put('/status/{leave} ', 'updateStatus');
     Route::get('/{leave}', 'getById');
     Route::get('/', 'get');
+    Route::get('/employee', 'getEmployeOvertime');
 });
 
 Route::prefix("overtime")

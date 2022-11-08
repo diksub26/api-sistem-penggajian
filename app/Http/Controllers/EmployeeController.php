@@ -302,4 +302,21 @@ class EmployeeController extends Controller
         $this->message = 'Potongan Gaji berhasil dihapus.';
         return $this->sendResponse();
     }
+
+    public function getManager(Request $request)
+    {
+        $employes = Employee::whereHas('user', function($q){
+            $q->where('role', 'manajer');
+        })
+        ->orderBy('fullname', 'desc')->get();
+
+        foreach ($employes as $employee) {
+            $this->data[]= [
+                'value' => $employee->id,
+                'text' => $employee->no_induk . '-' .$employee->fullname . '-' .$employee->division,
+            ];
+        }
+
+        return $this->sendResponse(); 
+    }
 }
