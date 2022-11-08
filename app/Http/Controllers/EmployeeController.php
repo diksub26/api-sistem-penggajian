@@ -114,6 +114,7 @@ class EmployeeController extends Controller
 
         foreach ($employes as $employee) {
             $this->data[]= [
+                'id' => $employee->id,
                 'noInduk' => $employee->no_induk,
                 'fullname' => $employee->fullname,
                 'gender' => $employee->gender,
@@ -127,7 +128,7 @@ class EmployeeController extends Controller
                 'functionalSalary' => $employee->functional_salary,
                 'email' => $employee->user->email,
                 'role' => $employee->user->role,
-                'employeePositionId' => $employee->position->employee_position_id,
+                'employeePositionId' => $employee->position->id,
                 'employeePosition' => $employee->position->position_name,
             ];
         }
@@ -138,6 +139,7 @@ class EmployeeController extends Controller
     public function getByUUID(Employee $employee)
     {
         $this->data = [
+            'id' => $employee->id,
             'noInduk' => $employee->no_induk,
             'fullname' => $employee->fullname,
             'gender' => $employee->gender,
@@ -151,7 +153,7 @@ class EmployeeController extends Controller
             'functionalSalary' => $employee->functional_salary,
             'email' => $employee->user->email,
             'role' => $employee->user->role,
-            'employeePositionId' => $employee->position->employee_position_id,
+            'employeePositionId' => $employee->position->id,
             'employeePosition' => $employee->position->position_name,
         ];
 
@@ -162,6 +164,7 @@ class EmployeeController extends Controller
     {
         $this->data = [
             'employee' => [
+                'id' => $employee->id,
                 'noInduk' => $employee->no_induk,
                 'fullname' => $employee->fullname,
                 'gender' => $employee->gender,
