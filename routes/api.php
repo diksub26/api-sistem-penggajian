@@ -38,7 +38,6 @@ Route::prefix("employee")
     Route::get('/full-info/{employee} ', 'getFullInfo');
     Route::get('/', 'get');
     Route::get('/{employee}', 'getByUUID');
-    Route::get('/{employee}', 'get');
     Route::delete('/{employee}', 'destroy');
 
     Route::post('/add-allowance/{employee}', 'addAllowance');
