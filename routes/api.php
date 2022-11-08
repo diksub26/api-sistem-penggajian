@@ -57,8 +57,8 @@ Route::prefix("leave")
 ->group(function() {
     Route::post('/', 'create');
     Route::put('/status/{leave} ', 'updateStatus');
-    Route::get('/{leave}', 'getById');
     Route::get('/', 'get');
+    Route::get('/{leave}', 'getById');
     Route::get('/employee', 'getEmployeOvertime');
 });
 

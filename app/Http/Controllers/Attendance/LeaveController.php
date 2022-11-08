@@ -21,8 +21,8 @@ class LeaveController extends Controller
         if($payload->fails()) return $this->sendResponse();
 
         $payload = $payload->validated();
-        $startDate = new DateTime($payload['startDate']);
-        $endDate = new DateTime($payload['endDate']);
+        $startDate = new \DateTime($payload['startDate']);
+        $endDate = new \DateTime($payload['endDate']);
         $interval = $startDate->diff($endDate);
         $amount = $interval->format('%a');
 
@@ -30,7 +30,7 @@ class LeaveController extends Controller
 
         Leave::create([
             'employee_id' => $request->user()->employee_id,
-            'amount' => $payload['amount'],
+            'amount' => $amount,
             'start_leave' => $payload['startDate'],
             'end_leave' => $payload['endDate'],
             'manager_id' => $payload['manager'],
@@ -70,9 +70,40 @@ class LeaveController extends Controller
         $payload = $payload->validated();
 
         $leave = new Leave();
-        $role = $request->user()->role;
-        if($role == 'karyawan') $leave->where('employee_id', $request->user()->employee_id);
-        else $leave->where('manager_id', $request->user()->employee_id);
+        $leave->where('employee_id', $request->user()->employee_id);
+       
+        if(isset($payload['status'])) $leave->where('status', $payload['status']);
+
+        $leave->orderBy('updated_at', 'desc');
+        $this->data = [];
+        foreach($leave->get() as $val) {
+            $this->data[] = [
+                // 'id' => $val->id,
+                'managerName' => $val->manager->fullname,
+                'reason' => $val->reason,
+                'status' => config('common.leaveStatus.'. $val->status),
+                'type' => config('common.leaveType.'. $val->type),
+                'startDate' => $val->start_leave,
+                'endDate' => $val->end_leave,
+                'amount' => $val->amount,
+            ];
+        }
+
+        return $this->sendResponse();
+    }
+
+    public function getEmployeeLeave(Request $request)
+    {
+        $payload = $this->validatingRequest($request, [
+            'status' => 'nullable|numeric|min:1|max:3',
+        ]);
+
+        if($payload->fails()) return $this->sendResponse();
+
+        $payload = $payload->validated();
+
+        $leave = new Leave();
+        $leave->where('manager_id', $request->user()->employee_id);
        
         if(isset($payload['status'])) $leave->where('status', $payload['status']);
 
@@ -82,7 +113,6 @@ class LeaveController extends Controller
             $this->data[] = [
                 'id' => $val->id,
                 'employeeName' => $val->employee->fullname,
-                'managerName' => $val->manager->fullname,
                 'reason' => $val->reason,
                 'status' => config('common.leaveStatus.'. $val->status),
                 'type' => config('common.leaveType.'. $val->type),
