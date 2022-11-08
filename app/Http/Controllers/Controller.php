@@ -39,7 +39,8 @@ class Controller extends BaseController
 
         if ($validator->fails()) {
             $this->error = $validator->errors()->all();
-            $this->message = "VALIDATION_ERROR";
+            $this->message = implode(',', $validator->errors()->all());
+            $this->statusCode = 422;
         }
         
         return $validator;
