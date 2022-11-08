@@ -287,9 +287,9 @@ class EmployeeController extends Controller
         foreach ($salaryCuts as $value) {
             $this->data[] = [
                 'id'  => $value->id ?? '',
-                'salaryCutName' => $value->masterSalaryCut->salary_cuts_name ?? '',
-                'salaryCutAmount' => $value->masterSalaryCut->salary_cuts_amount ?? '',
-                'salaryCutType' => $value->masterSalaryCut->salary_cuts_type ?? '',
+                'name' => $value->masterSalaryCut->salary_cuts_name ?? '',
+                'amount' => $value->masterSalaryCut->salary_cuts_amount ?? '',
+                'type' => $value->masterSalaryCut->salary_cuts_type ?? '',
             ];
             
         }

@@ -10,7 +10,8 @@ class SalaryCutsController extends Controller
 {
     private $_storeValidationRules = [
         'name' => 'required|max:255',
-        'amount' => 'required|numeric'
+        'amount' => 'required|numeric',
+        "type" => 'required|in:amount,percentage'
     ];
 
     public function index()
@@ -39,7 +40,8 @@ class SalaryCutsController extends Controller
         return [
             'id'        => $salaryCuts->id,
             'name'      => $salaryCuts->salary_cuts_name,
-            'amount'    => $salaryCuts->salary_cuts_amount
+            'amount'    => $salaryCuts->salary_cuts_amount,
+            'type'      => $salaryCuts->salary_cuts_type
         ];
     }
     
@@ -54,6 +56,7 @@ class SalaryCutsController extends Controller
         MasterSalaryCuts::create([
             'salary_cuts_name' => $payload['name'],
             'salary_cuts_amount' => $payload['amount'],
+            'salary_cuts_type' => $payload['type'],
         ]);
 
         $this->message = "Data berhasil disimpan.";
@@ -70,6 +73,7 @@ class SalaryCutsController extends Controller
 
         $salaryCuts->salary_cuts_name = $payload['name'];
         $salaryCuts->salary_cuts_amount = $payload['amount'];
+        $salaryCuts->salary_cuts_type = $payload['type'];
         $salaryCuts->save();
 
         $this->message = "Data berhasil diupdate.";
