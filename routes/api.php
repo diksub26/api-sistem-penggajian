@@ -58,8 +58,8 @@ Route::prefix("leave")
     Route::post('/', 'create');
     Route::put('/status/{leave} ', 'updateStatus');
     Route::get('/', 'get');
+    Route::get('/employee', 'getEmployeeLeave');
     Route::get('/{leave}', 'getById');
-    Route::get('/employee', 'getEmployeOvertime');
 });
 
 Route::prefix("overtime")
@@ -68,8 +68,9 @@ Route::prefix("overtime")
 ->group(function() {
     Route::post('/', 'create');
     Route::put('/status/{overtime} ', 'updateStatus');
-    Route::get('/{overtime}', 'getById');
     Route::get('/', 'get');
+    Route::get('/employee', 'getEmployeOvertime');
+    Route::get('/{overtime}', 'getById');
 });
 
 Route::prefix("attendance")
