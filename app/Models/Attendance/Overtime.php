@@ -23,6 +23,6 @@ class Overtime extends Model
 
     public function manager()
     {
-        return $this->belongsTo(Employee::class, 'manager_id');
+        return $this->belongsTo(Employee::class, 'manager_id', 'id' );
     }
 }

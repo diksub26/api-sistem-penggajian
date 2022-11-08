@@ -13,8 +13,8 @@ class OvertimeController extends Controller
         $payload = $this->validatingRequest($request, [
             'manager' => 'required|exists:App\Models\Employee,id',
             'date' => 'required|date:Y-m-d',
-            'startTime' => 'required|date_format:H:i:s',
-            'endTime' => 'required|date_format:H:i:s',
+            'startTime' => 'required|date_format:H:i',
+            'endTime' => 'required|date_format:H:i',
             'description' => 'required',
             'project' => 'required',
         ]);
@@ -64,9 +64,39 @@ class OvertimeController extends Controller
         $payload = $payload->validated();
 
         $overtime = new Overtime();
-        $role = $request->user()->role;
-        if($role == 'karyawan') $overtime->where('employee_id', $request->user()->employee_id);
-        else $overtime->where('manager_id', $request->user()->employee_id);
+        $overtime->where('employee_id', $request->user()->employee_id);
+       
+        if(isset($payload['status'])) $overtime->where('status', $payload['status']);
+
+        $overtime->orderBy('updated_at', 'desc');
+        $this->data = [];
+        foreach($overtime->get() as $val) {
+            $this->data[] = [
+                'id' => $val->id,
+                'date' => $val->overtime_date,
+                'time' => $val->start_time ."-". $val->end_time,
+                'managerName' => $val->manager->fullname,
+                'project' => $val->project,
+                'description' => $val->description,
+                'status' => config('common.leaveStatus.'. $val->status),
+            ];
+        }
+
+        return $this->sendResponse();
+    }
+
+    public function getEmployeOvertime(Request $request)
+    {
+        $payload = $this->validatingRequest($request, [
+            'status' => 'nullable|numeric|min:1|max:3',
+        ]);
+
+        if($payload->fails()) return $this->sendResponse();
+
+        $payload = $payload->validated();
+
+        $overtime = new Overtime();
+        $overtime->where('manager_id', $request->user()->employee_id);
        
         if(isset($payload['status'])) $overtime->where('status', $payload['status']);
 
