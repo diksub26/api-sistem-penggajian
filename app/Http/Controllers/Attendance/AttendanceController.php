@@ -115,4 +115,17 @@ class AttendanceController extends Controller
 
         return $this->sendResponse();
     }
+
+    public function getSavedDayOfWork(Request $request)
+    {
+        $attendanceConfig = AttendanceImportConfig::select('day_of_work')
+        ->where('month', date('m'))
+        ->where('year', date('Y'))
+        ->first();
+
+        $this->data['day_of_work'] = 0;
+        if($attendanceConfig) $this->data['day_of_work'] = $attendanceConfig->day_of_work;
+
+        return $this->sendResponse();
+    }
 }

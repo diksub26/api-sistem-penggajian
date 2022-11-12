@@ -79,5 +79,6 @@ Route::prefix("attendance")
 ->group(function() {
     Route::post('/import', 'importFormExcel');
     Route::get('/download-template', 'downloadImportTemplate');
+    Route::get('/saved-day-of-work', 'getSavedDayOfWork');
     Route::get('/', 'get');
 });
