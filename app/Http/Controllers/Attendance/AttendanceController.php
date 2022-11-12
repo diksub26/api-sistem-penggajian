@@ -118,7 +118,7 @@ class AttendanceController extends Controller
                     'permitte' => $val->permitte,
                     'sick' => $val->sick,
                     'late' => $val->late,
-                    'salaryStatus' => config('common.salaryStatus')[1]
+                    'salaryStatus' => $val->is_final ? config('common.salaryStatus')[2] : config('common.salaryStatus')[1]
                 ];
             }
         }

@@ -23,7 +23,8 @@ class EmployeeController extends Controller
         'assignmentDate' => 'required|date:Y-m-d',
         'division' => 'required',
         'basicSalary' => 'required|numeric',
-        'role' => 'required|in:admin,karyawan,manajer'
+        'role' => 'required|in:admin,karyawan,manajer',
+        'bankAccNo' => 'required'
     ];
 
     public function store(Request $request)
@@ -51,6 +52,7 @@ class EmployeeController extends Controller
                 'assignment_date' => $payload['assignmentDate'],
                 'division' => $payload['division'],
                 'basic_salary' => $payload['basicSalary'],
+                'bank_acc_no' => $payload['bankAccNo'],
             ]);
             $employe->user()->create([
                 'employee_id' => $employe->id,
@@ -96,6 +98,7 @@ class EmployeeController extends Controller
             $employee->assignment_date = $payload['assignmentDate'];
             $employee->division = $payload['division'];
             $employee->basic_salary = $payload['basicSalary'];
+            $employee->bank_acc_no = $payload['bankAccNo'];
             $employee->save();
     
             $employee->user->email = $payload['email'];
@@ -126,6 +129,7 @@ class EmployeeController extends Controller
                 'assignmentDate' => $employee->assignment_date,
                 'division' => $employee->division,
                 'basicSalary' => $employee->basic_salary,
+                'bankAccNo' => $employee->bank_acc_no,
                 'email' => $employee->user->email,
                 'role' => $employee->user->role,
                 'employeePositionId' => $employee->position->id,
@@ -151,6 +155,7 @@ class EmployeeController extends Controller
             'assignmentDate' => $employee->assignment_date,
             'division' => $employee->division,
             'basicSalary' => $employee->basic_salary,
+            'bankAccNo' => $employee->bank_acc_no,
             'email' => $employee->user->email,
             'role' => $employee->user->role,
             'employeePositionId' => $employee->position->id,
@@ -176,6 +181,7 @@ class EmployeeController extends Controller
                 'assignmentDate' => $employee->assignment_date,
                 'division' => $employee->division,
                 'basicSalary' => $employee->basic_salary,
+                'bankAccNo' => $employee->bank_acc_no,
             ],
             'user' => [
                 'email' => $employee->user->email,

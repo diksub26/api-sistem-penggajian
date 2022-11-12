@@ -33,6 +33,7 @@ return new class extends Migration
             $table->date('assignment_date');
             $table->string('division', 75);
             $table->integer('basic_salary');
+            $table->string('bank_acc_no', 75);
             $table->timestamps();
         });
     }

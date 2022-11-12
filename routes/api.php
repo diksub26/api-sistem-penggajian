@@ -5,6 +5,7 @@ use App\Http\Controllers\Attendance\LeaveController;
 use App\Http\Controllers\Attendance\OvertimeController;
 use App\Http\Controllers\Common\AuthController;
 use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\Transaction\SalaryController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -81,4 +82,12 @@ Route::prefix("attendance")
     Route::get('/download-template', 'downloadImportTemplate');
     Route::get('/saved-day-of-work', 'getSavedDayOfWork');
     Route::get('/', 'get');
+});
+
+Route::prefix("salary")
+->middleware('auth:sanctum')
+->controller(SalaryController::class)
+->group(function() {
+    Route::post('/mark-as-transferred/{attendance}', 'markAsTransferred');
+    Route::get('/by-attendance/{attendance}', 'getByAttendanceId');
 });

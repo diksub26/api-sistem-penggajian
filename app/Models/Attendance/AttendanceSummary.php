@@ -3,6 +3,7 @@
 namespace App\Models\Attendance;
 
 use App\Models\Employee;
+use App\Models\Transaction\Salary;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -18,11 +19,16 @@ class AttendanceSummary extends Model
 
     public function importConfig()
     {
-        return $this->belongsToMany(AttendanceImportConfig::class);
+        return $this->belongsTo(AttendanceImportConfig::class, 'attendance_import_config_id');
     }
 
     public function employee()
     {
         return $this->belongsTo(Employee::class);
+    }
+
+    public function salary()
+    {
+        return $this->hasOne(Salary::class);
     }
 }

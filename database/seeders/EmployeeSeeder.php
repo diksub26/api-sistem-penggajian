@@ -29,6 +29,7 @@ class EmployeeSeeder extends Seeder
             'assignment_date' => '2019-08-01',
             'division' => 'Project',
             'basic_salary' => '500000',
+            'bank_acc_no' => '787891263'
         ]);
 
         $employe->user()->create([
@@ -51,6 +52,7 @@ class EmployeeSeeder extends Seeder
             'assignment_date' => '2019-08-01',
             'division' => 'Project',
             'basic_salary' => '500000',
+            'bank_acc_no' => '787891263'
         ]);
 
         $admin->user()->create([
@@ -73,6 +75,7 @@ class EmployeeSeeder extends Seeder
             'assignment_date' => '2019-08-01',
             'division' => 'Project',
             'basic_salary' => '500000',
+            'bank_acc_no' => '787891263'
         ]);
 
         $karyawan->user()->create([

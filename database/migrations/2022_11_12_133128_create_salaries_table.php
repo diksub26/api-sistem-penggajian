@@ -13,20 +13,17 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('overtimes', function (Blueprint $table) {
+        Schema::create('salaries', function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->charset = 'utf8mb4';
             $table->collation = 'utf8mb4_unicode_ci';
 
             $table->uuid('id')->primary();
-            $table->uuid('employee_id');
-            $table->date('overtime_date');
-            $table->time('start_time');
-            $table->time('end_time');
-            $table->float('total');
-            $table->uuid('manager_id');
-            $table->text('description');
-            $table->string('project', 100);
+            $table->uuid('attendance_summary_id');
+            $table->uuid("employee_id");
+            $table->integer('basic_salary');
+            $table->integer('total_allowances')->default(0);
+            $table->integer('total_salary_cuts')->default(0);
             $table->tinyInteger('status');
             $table->timestamps();
         });
@@ -39,6 +36,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('overtimes');
+        Schema::dropIfExists('salaries');
     }
 };
