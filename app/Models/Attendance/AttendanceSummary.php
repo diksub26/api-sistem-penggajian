@@ -11,7 +11,12 @@ class AttendanceSummary extends Model
     use HasFactory, HasUuids;
 
     protected $fillable = [
-        'employee_id', 'month', 'year', 'attend', 'leave',
-        'permitte', 'sick', 'late'
+        'employee_id', 'attendance_import_config_id','attend',
+        'leave', 'permitte', 'sick', 'late'
     ];
+
+    public function importConfig()
+    {
+        return $this->belongsToMany(AttendanceImportConfig::class);
+    }
 }

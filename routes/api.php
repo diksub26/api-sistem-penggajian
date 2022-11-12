@@ -77,7 +77,7 @@ Route::prefix("attendance")
 ->middleware('auth:sanctum')
 ->controller(AttendanceController::class)
 ->group(function() {
-    Route::post('/', 'importFormExcel');
+    Route::post('/import', 'importFormExcel');
     Route::get('/download-template', 'downloadImportTemplate');
     Route::get('/', 'get');
 });

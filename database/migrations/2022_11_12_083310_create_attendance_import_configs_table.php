@@ -13,19 +13,15 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('attendance_summaries', function (Blueprint $table) {
+        Schema::create('attendance_import_configs', function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->charset = 'utf8mb4';
             $table->collation = 'utf8mb4_unicode_ci';
 
-            $table->uuid('id')->primary();
-            $table->uuid('employee_id');
-            $table->unsignedBigInteger('attendance_import_config_id');
-            $table->tinyInteger('attend')->default(0);
-            $table->tinyInteger('leave')->default(0);;
-            $table->tinyInteger('permitte')->default(0);;
-            $table->tinyInteger('sick')->default(0);;
-            $table->tinyInteger('late')->default(0);;
+            $table->id();
+            $table->char('month', 2);
+            $table->char('year', 4);
+            $table->char('day_of_work', 2);
             $table->timestamps();
         });
     }
@@ -37,6 +33,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('attendance_summaries');
+        Schema::dropIfExists('attendance_import_configs');
     }
 };
