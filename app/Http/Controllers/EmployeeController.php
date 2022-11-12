@@ -22,7 +22,7 @@ class EmployeeController extends Controller
         'employeePositionId' => 'required|exists:App\Models\MasterData\EmployeePosition,id',
         'assignmentDate' => 'required|date:Y-m-d',
         'division' => 'required',
-        'functionalSalary' => 'required|numeric',
+        'basicSalary' => 'required|numeric',
         'role' => 'required|in:admin,karyawan,manajer'
     ];
 
@@ -50,7 +50,7 @@ class EmployeeController extends Controller
                 'employee_position_id' => $payload['employeePositionId'],
                 'assignment_date' => $payload['assignmentDate'],
                 'division' => $payload['division'],
-                'functional_salary' => $payload['functionalSalary'],
+                'basic_salary' => $payload['basicSalary'],
             ]);
             $employe->user()->create([
                 'employee_id' => $employe->id,
@@ -95,7 +95,7 @@ class EmployeeController extends Controller
             $employee->employee_position_id = $payload['employeePositionId'];
             $employee->assignment_date = $payload['assignmentDate'];
             $employee->division = $payload['division'];
-            $employee->functional_salary = $payload['functionalSalary'];
+            $employee->basic_salary = $payload['basicSalary'];
             $employee->save();
     
             $employee->user->email = $payload['email'];
@@ -125,7 +125,7 @@ class EmployeeController extends Controller
                 'noHp' => $employee->no_hp,
                 'assignmentDate' => $employee->assignment_date,
                 'division' => $employee->division,
-                'functionalSalary' => $employee->functional_salary,
+                'basicSalary' => $employee->basic_salary,
                 'email' => $employee->user->email,
                 'role' => $employee->user->role,
                 'employeePositionId' => $employee->position->id,
@@ -150,7 +150,7 @@ class EmployeeController extends Controller
             'noHp' => $employee->no_hp,
             'assignmentDate' => $employee->assignment_date,
             'division' => $employee->division,
-            'functionalSalary' => $employee->functional_salary,
+            'basicSalary' => $employee->basic_salary,
             'email' => $employee->user->email,
             'role' => $employee->user->role,
             'employeePositionId' => $employee->position->id,
@@ -175,7 +175,7 @@ class EmployeeController extends Controller
                 'noHp' => $employee->no_hp,
                 'assignmentDate' => $employee->assignment_date,
                 'division' => $employee->division,
-                'functionalSalary' => $employee->functional_salary,
+                'basicSalary' => $employee->basic_salary,
             ],
             'user' => [
                 'email' => $employee->user->email,

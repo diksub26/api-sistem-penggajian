@@ -28,7 +28,7 @@ class EmployeeSeeder extends Seeder
             'employee_position_id' => '1',
             'assignment_date' => '2019-08-01',
             'division' => 'Project',
-            'functional_salary' => '500000',
+            'basic_salary' => '500000',
         ]);
 
         $employe->user()->create([
@@ -50,7 +50,7 @@ class EmployeeSeeder extends Seeder
             'employee_position_id' => '1',
             'assignment_date' => '2019-08-01',
             'division' => 'Project',
-            'functional_salary' => '500000',
+            'basic_salary' => '500000',
         ]);
 
         $admin->user()->create([
@@ -72,7 +72,7 @@ class EmployeeSeeder extends Seeder
             'employee_position_id' => '3',
             'assignment_date' => '2019-08-01',
             'division' => 'Project',
-            'functional_salary' => '500000',
+            'basic_salary' => '500000',
         ]);
 
         $karyawan->user()->create([

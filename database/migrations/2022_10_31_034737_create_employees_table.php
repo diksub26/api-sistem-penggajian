@@ -32,7 +32,7 @@ return new class extends Migration
             $table->bigInteger('employee_position_id');
             $table->date('assignment_date');
             $table->string('division', 75);
-            $table->integer('functional_salary');
+            $table->integer('basic_salary');
             $table->timestamps();
         });
     }

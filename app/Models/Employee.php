@@ -18,7 +18,7 @@ class Employee extends Model
         'place_of_birth', 'gender', 'dob',
         'address', 'religion', 'no_hp',
         'employee_position_id', 'assignment_date',
-        'division', 'functional_salary'
+        'division', 'basic_salary'
     ];
 
     public static function boot() {
