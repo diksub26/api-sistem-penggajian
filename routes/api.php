@@ -78,5 +78,6 @@ Route::prefix("attendance")
 ->controller(AttendanceController::class)
 ->group(function() {
     Route::post('/', 'importFormExcel');
+    Route::get('/download-template', 'downloadImportTemplate');
     Route::get('/', 'get');
 });

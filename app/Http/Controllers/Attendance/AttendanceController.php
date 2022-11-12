@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Attendance;
 
+use App\Exports\AttendaceTemplate;
 use App\Http\Controllers\Controller;
 use App\Models\Attendance\AttendanceSummary;
 use App\Models\Attendance\Leave;
@@ -11,6 +12,11 @@ use Illuminate\Support\Facades\DB;
 
 class AttendanceController extends Controller
 {
+    public function downloadImportTemplate(Request $request)
+    {
+        return \Excel::download(new AttendaceTemplate, 'templateImportAbsensi.xlsx');
+    }
+
     public function importFormExcel(Request $request)
     {
         $payload = $this->validatingRequest($request, [
