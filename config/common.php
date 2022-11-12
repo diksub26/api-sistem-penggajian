@@ -12,5 +12,9 @@ return [
         '3' => "Menikah",
         '4' => "Beribadah",
         '5' => "Lainnya"
-    ]
+    ],
+    'salaryStatus' => [
+        '1' => "Belum ditransfer",
+        '2' => "Sudah ditransfer",
+    ],
 ];

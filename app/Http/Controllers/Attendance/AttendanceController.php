@@ -91,27 +91,28 @@ class AttendanceController extends Controller
 
         $payload = $payload->validated();
 
-        $attendances = AttendanceSummary::where('month', $payload['month'])
+        $attendances = AttendanceImportConfig::where('month', $payload['month'])
         ->where('year', $payload['year'])
-        ->get();
+        ->first();
 
         $this->data = [];
-        foreach ($attendances as $val) {
-            $this->data[] = $this->_mapResponse($val);
+        if(!is_null($attendances->attendanceSummary)) {
+            foreach ($attendances->attendanceSummary as $val) {
+                $this->data[] = [
+                    'id' => $val->id,
+                    'noInduk' => $val->employee->no_induk,
+                    'employeeName' => $val->employee->fullname,
+                    'basicSalary' => $val->employee->basic_salary,
+                    'attend' => $val->attend,
+                    'leave' => $val->leave,
+                    'permitte' => $val->permitte,
+                    'sick' => $val->sick,
+                    'late' => $val->late,
+                    'salaryStatus' => config('common.salaryStatus')[1]
+                ];
+            }
         }
 
         return $this->sendResponse();
-    }
-
-    private function _mapResponse($data)
-    {
-        return [
-            'id' => $data->id,
-            'hadir' => $data->attend,
-            'sakit' => $data->sick,
-            'izin' => $data->permitte,
-            'cuti' => $data->leave,
-            'terlambat' => $data->late,
-        ];
     }
 }
