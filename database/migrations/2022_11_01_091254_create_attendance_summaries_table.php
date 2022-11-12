@@ -22,10 +22,11 @@ return new class extends Migration
             $table->uuid('employee_id');
             $table->unsignedBigInteger('attendance_import_config_id');
             $table->tinyInteger('attend')->default(0);
-            $table->tinyInteger('leave')->default(0);;
-            $table->tinyInteger('permitte')->default(0);;
-            $table->tinyInteger('sick')->default(0);;
-            $table->tinyInteger('late')->default(0);;
+            $table->tinyInteger('leave')->default(0);
+            $table->tinyInteger('permitte')->default(0);
+            $table->tinyInteger('sick')->default(0);
+            $table->tinyInteger('late')->default(0);
+            $table->boolean('is_final')->default(false);
             $table->timestamps();
         });
     }
