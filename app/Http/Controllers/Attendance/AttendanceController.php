@@ -58,6 +58,8 @@ class AttendanceController extends Controller
                     'attendance_import_config_id' => $attendanceConfig->id
                 ]);
 
+                if($attendanceSummary->is_final) throw new \Exception('Gaji Karyawan dengan No. Induk : ' . $val['no_induk'] . ' sudah dibayarkan.');
+
                 $attendanceSummary->attend = $val['hadir'] - $leaveThisMonth;
                 $attendanceSummary->leave = $leaveThisMonth;
                 $attendanceSummary->permitte = $val['izin'];
@@ -96,7 +98,7 @@ class AttendanceController extends Controller
         ->first();
 
         $this->data = [];
-        if(!is_null($attendances->attendanceSummary)) {
+        if($attendances && !is_null($attendances->attendanceSummary)) {
             foreach ($attendances->attendanceSummary as $val) {
                 $this->data[] = [
                     'id' => $val->id,
