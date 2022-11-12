@@ -22,6 +22,8 @@ return new class extends Migration
             $table->char('month', 2);
             $table->char('year', 4);
             $table->char('day_of_work', 2);
+            $table->date('start_period');
+            $table->date('end_period');
             $table->timestamps();
         });
     }
