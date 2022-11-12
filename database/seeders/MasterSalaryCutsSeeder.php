@@ -22,8 +22,13 @@ class MasterSalaryCutsSeeder extends Seeder
                 'salary_cuts_type' => 'amount',
             ],
             [
-                'salary_cuts_name' => 'BPJS',
-                'salary_cuts_amount' => '2.5',
+                'salary_cuts_name' => 'JHT',
+                'salary_cuts_amount' => '74846',
+                'salary_cuts_type' => 'amount',
+            ],
+            [
+                'salary_cuts_name' => 'JKN',
+                'salary_cuts_amount' => '1',
                 'salary_cuts_type' => 'percentage',
             ],
         ]);
