@@ -9,7 +9,8 @@ class AttendanceImportConfig extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'month', 'year', 'day_of_work'
+        'month', 'year', 'day_of_work',
+        'start_period', 'end_period',
     ];
 
     public function attendanceSummary()

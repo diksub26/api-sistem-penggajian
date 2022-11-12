@@ -20,10 +20,14 @@ class SettingSeeder extends Seeder
                 'name' => 'Denda Terlambat',
                 'value' => '10000'
             ],
+        );
+        Setting::create(
             [
                 'name' => 'Fee Lembur',
                 'value' => '10000'
-            ],
+            ]
+        );
+        Setting::create(
             [
                 'name' => 'Tgl Cut off',
                 'value' => '20'

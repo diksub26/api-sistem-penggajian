@@ -9,6 +9,7 @@ use App\Models\Attendance\AttendanceImportConfig;
 use App\Models\Attendance\AttendanceSummary;
 use App\Models\Attendance\Leave;
 use App\Models\Employee;
+use App\Models\MasterData\Setting;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -23,23 +24,29 @@ class AttendanceController extends Controller
     {        
         $payload = $this->validatingRequest($request, [
             'fileImport' => 'required|mimetypes:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel',
-            'dayOfWork' => 'required|numeric|max:30|min:10'
+            'dayOfWork' => 'required|numeric|max:30|min:10',
         ]);
 
         if($payload->fails()) return $this->sendResponse();
 
         $payload = $payload->validated();
+        $cutOfDate = Setting::find(3);
+        $cutOfDate = $cutOfDate ? $cutOfDate->value : 20;
+        $endDate = date("Y-m") . "-" . $cutOfDate;
+        $startDate = date("Y-m-d", strtotime("-1 month", strtotime($endDate)));
 
         $attendanceConfig = AttendanceImportConfig::firstOrNew([
             'month' => date('m'),
             'year'=> date('Y')
         ]);
         $attendanceConfig->day_of_work = $payload['dayOfWork'];
+        $attendanceConfig->start_period = $startDate;
+        $attendanceConfig->end_period = $endDate;
         $attendanceConfig->save();
 
         $lastBar = 1;
         $collectionFromExcel = \Excel::toCollection(new GeneralImport, $request->file('fileImport'));
-        $error = [];
+        $error = [];        
         foreach ($collectionFromExcel[0] as $val) {
             try {
                 DB::beginTransaction();
@@ -48,7 +55,8 @@ class AttendanceController extends Controller
                 if(!$employe) throw new \Exception('Data Karyawan dengan No. Induk : ' . $val['no_induk'] . ' tidak ditemukan.');
 
                 $leaveThisMonth = Leave::where('employee_id', $employe->id)
-                ->whereMonth('created_at', date('M'))
+                ->whereDate('created_at', '>=', $startDate)
+                ->whereDate('created_at', '<=', $endDate)
                 ->whereYear('created_at', date('Y'))
                 ->where('status', 2)
                 ->sum('amount');
@@ -120,13 +128,17 @@ class AttendanceController extends Controller
 
     public function getSavedDayOfWork(Request $request)
     {
-        $attendanceConfig = AttendanceImportConfig::select('day_of_work')
+        $attendanceConfig = AttendanceImportConfig::select('day_of_work', 'start_period', 'end_period')
         ->where('month', date('m'))
         ->where('year', date('Y'))
         ->first();
 
         $this->data['day_of_work'] = 0;
-        if($attendanceConfig) $this->data['day_of_work'] = $attendanceConfig->day_of_work;
+        if($attendanceConfig) {
+            $this->data['dayOfWork'] = $attendanceConfig->day_of_work;
+            $this->data['startPeriod'] = $attendanceConfig->start_period;
+            $this->data['endPeriod'] = $attendanceConfig->end_period;
+        }
 
         return $this->sendResponse();
     }

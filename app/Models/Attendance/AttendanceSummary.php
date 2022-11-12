@@ -13,7 +13,7 @@ class AttendanceSummary extends Model
 
     protected $fillable = [
         'employee_id', 'attendance_import_config_id','attend',
-        'leave', 'permitte', 'sick', 'late'
+        'leave', 'permitte', 'sick', 'late', 'is_final'
     ];
 
     public function importConfig()
