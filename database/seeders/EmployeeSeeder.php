@@ -18,7 +18,7 @@ class EmployeeSeeder extends Seeder
     {
         $employe = Employee::create([
             'no_induk' => '11111110',
-            'fullname' => 'Diki Subagja',
+            'fullname' => 'Rian Darmawan',
             'gender' => 'L',
             'place_of_birth' => 'Bandung',
             'dob' => '1997-12-14',
@@ -40,7 +40,7 @@ class EmployeeSeeder extends Seeder
 
         $admin = Employee::create([
             'no_induk' => '11111111',
-            'fullname' => 'Admin',
+            'fullname' => 'Ahmad Fauzi',
             'gender' => 'L',
             'place_of_birth' => 'Bandung',
             'dob' => '1997-12-14',
@@ -61,8 +61,8 @@ class EmployeeSeeder extends Seeder
         ]);
 
         $karyawan = Employee::create([
-            'no_induk' => '11111111',
-            'fullname' => 'Karyawan 1',
+            'no_induk' => '11111112',
+            'fullname' => 'Teguh Hidayat',
             'gender' => 'L',
             'place_of_birth' => 'Bandung',
             'dob' => '1997-12-14',
