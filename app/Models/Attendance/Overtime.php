@@ -21,8 +21,10 @@ class Overtime extends Model
         parent::boot();
 
         static::creating(function($overtime) {
-            $to = Carbon::createFromFormat('Y-m-d H:s:i', date('Y-m-d') . $overtime->start_time . ':00');
-            $from = Carbon::createFromFormat('Y-m-d H:s:i', date('Y-m-d') . $overtime->from . ':00');
+            $startTime = date('Y-m-d ') . $overtime->start_time . ':00';
+            $endTime = date('Y-m-d ') . $overtime->end_time . ':00';
+            $to = Carbon::createFromFormat('Y-m-d H:i:s', $startTime);
+            $from = Carbon::createFromFormat('Y-m-d H:i:s', $endTime);
             $overtime->total = $to->diffInHours($from);
         });
     }
