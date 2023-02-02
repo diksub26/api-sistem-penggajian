@@ -12,7 +12,10 @@ class ReportSallaryController extends Controller
 {
     public function getAvailiable()
     {
-        $this->data = AttendanceImportConfig::get()
+        $this->data = AttendanceImportConfig::whereHas("attendanceSummary", function($q){
+            $q->where("is_final", 1);
+        })
+        ->get()
         ->transform(function($data) {
             return [
                 "id" => $data->id,
