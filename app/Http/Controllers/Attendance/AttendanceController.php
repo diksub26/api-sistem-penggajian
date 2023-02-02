@@ -93,14 +93,14 @@ class AttendanceController extends Controller
     public function get(Request $request)
     {
         $payload = $this->validatingRequest($request, [
-            'month' => 'required|date_format:m',
+            'month' => 'required|in:1,2,3,4,5,6,7,8,9,10,11,12',
             'year' => 'required|date_format:Y'
         ]);
 
         if($payload->fails()) return $this->sendResponse();
 
         $payload = $payload->validated();
-
+        $payload['month'] = $payload['month'] > 9 ? $payload['month'] : '0'.$payload['month'];
         $attendances = AttendanceImportConfig::where('month', $payload['month'])
         ->where('year', $payload['year'])
         ->first();
