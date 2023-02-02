@@ -4,10 +4,12 @@ namespace App\Http\Controllers\Report;
 
 use App\Http\Controllers\Controller;
 use App\Models\Attendance\Leave;
+use App\Models\Attendance\Overtime;
 use Illuminate\Http\Request;
 use  Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
-class ReportLeaveController extends Controller
+class ReportOvertimeController extends Controller
 {
     public function getPerMonth(Request $request)
     {
@@ -17,27 +19,23 @@ class ReportLeaveController extends Controller
 
         $payload = $payload->validated();
         $payloadArr = explode("-", $payload["monthYear"]);
-        $leave = Leave::whereMonth('updated_at', $payloadArr[1])
-        ->whereYear('updated_at', $payloadArr[0])
-        ->orderBy('updated_at', 'desc')
-        ->get();
+        $overtime =  Overtime::select(DB::raw("SUM(total) as totalCount"), "employee_id")
+        ->where("status", 2)
+        ->whereMonth('overtime_date', $payloadArr[1])
+        ->whereYear('overtime_date', $payloadArr[0])
+        ->groupBy("employee_id")
+        ->with("employee.position");
         $data = [];
-        
+
         Carbon::setlocale("id");
         $month = Carbon::create($payload["monthYear"]."-01")
         ->format("F Y");
 
-        foreach($leave as $val) {
+        foreach($overtime->get() as $val) {
             $data[] = [
-                'id' => $val->id,
-                'managerName' => $val->manager->fullname,
                 'employeeName' => $val->employee->fullname,
-                'reason' => $val->reason,
-                'status' => config('common.leaveStatus.'. $val->status),
-                'type' => config('common.leaveType.'. $val->type),
-                'startDate' => $val->start_leave,
-                'endDate' => $val->end_leave,
-                'amount' => $val->amount,
+                'position' => $val->employee->position->position_name,
+                'total' => $val->totalCount,
             ];
         }
         $this->data["report"] = $data;   

@@ -5,6 +5,9 @@ use App\Http\Controllers\Attendance\LeaveController;
 use App\Http\Controllers\Attendance\OvertimeController;
 use App\Http\Controllers\Common\AuthController;
 use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\Report\ReportLeaveController;
+use App\Http\Controllers\Report\ReportOvertimeController;
+use App\Http\Controllers\Report\ReportSallaryController;
 use App\Http\Controllers\Transaction\SalaryController;
 use Illuminate\Support\Facades\Route;
 
@@ -90,4 +93,27 @@ Route::prefix("salary")
 ->group(function() {
     Route::post('/mark-as-transferred/{attendance}', 'markAsTransferred');
     Route::get('/by-attendance/{attendance}', 'getByAttendanceId');
+});
+
+Route::prefix("report")
+->middleware('auth:sanctum')
+->group(function() {
+    Route::prefix("salary")
+    ->controller(ReportSallaryController::class)
+    ->group(function() {
+        Route::get('/avaliable', 'getAvailiable');
+        Route::get('/{attendanceConfig}', 'get');
+    });
+
+    Route::prefix("leave")
+    ->controller(ReportLeaveController::class)
+    ->group(function() {
+        Route::get('/month', 'getPerMonth');
+    });
+
+    Route::prefix("overtime")
+    ->controller(ReportOvertimeController::class)
+    ->group(function() {
+        Route::get('/month', 'getPerMonth');
+    });
 });
