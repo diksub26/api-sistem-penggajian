@@ -16,10 +16,10 @@
                 <td>{{ $employee->no_induk }}</td>
                 <td>{{ $employee->fullname }}</td>
                 <td>{{ $employee->division }}</td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
             </tr>
         @endforeach
     </tbody>
