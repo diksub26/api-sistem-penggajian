@@ -49,9 +49,9 @@ class SalaryController extends Controller
             $feeOvertime = $feeOvertime->value;
             $overtime = Overtime::whereDate('overtime_date', '>=', $importConfig->start_period)
             ->whereDate('overtime_date', '<=', $importConfig->end_period)
-            ->where('status', config('common.leaveStatus')['2'])
+            ->where('status', 2)
             ->sum('total');    
-            
+
             $overtime = $overtime * $feeOvertime;
             $allowance[] = [
                 'name' => "Tunjangan Lembur",
@@ -218,7 +218,9 @@ class SalaryController extends Controller
 
     public function getSlip()
     {
-        $this->data = AttendanceImportConfig::whereHas("attendanceSummaryByEmployeeId")
+        $this->data = AttendanceImportConfig::whereHas("attendanceSummaryByEmployeeId", function($q) {
+            $q->where("is_final", 1);
+        })
         ->with("attendanceSummaryByEmployeeId")
         ->get()
         ->transform(function($data) {
