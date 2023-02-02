@@ -69,8 +69,7 @@ class LeaveController extends Controller
 
         $payload = $payload->validated();
 
-        $leave = new Leave();
-        $leave->where('employee_id', $request->user()->employee_id);
+        $leave = Leave::where('employee_id', $request->user()->employee_id);
        
         if(isset($payload['status'])) $leave->where('status', $payload['status']);
 
@@ -102,8 +101,7 @@ class LeaveController extends Controller
 
         $payload = $payload->validated();
 
-        $leave = new Leave();
-        $leave->where('manager_id', $request->user()->employee_id);
+        $leave = Leave::where('manager_id', $request->user()->employee_id);
        
         if(isset($payload['status'])) $leave->where('status', $payload['status']);
 

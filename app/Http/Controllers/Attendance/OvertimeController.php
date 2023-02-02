@@ -63,8 +63,7 @@ class OvertimeController extends Controller
 
         $payload = $payload->validated();
 
-        $overtime = new Overtime();
-        $overtime->where('employee_id', $request->user()->employee_id);
+        $overtime = Overtime::where('employee_id', $request->user()->employee_id);
        
         if(isset($payload['status'])) $overtime->where('status', $payload['status']);
 
@@ -95,8 +94,7 @@ class OvertimeController extends Controller
 
         $payload = $payload->validated();
 
-        $overtime = new Overtime();
-        $overtime->where('manager_id', $request->user()->employee_id);
+        $overtime = Overtime::where('manager_id', $request->user()->employee_id);
        
         if(isset($payload['status'])) $overtime->where('status', $payload['status']);
 
