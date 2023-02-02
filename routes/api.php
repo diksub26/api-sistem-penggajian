@@ -92,6 +92,7 @@ Route::prefix("salary")
 ->controller(SalaryController::class)
 ->group(function() {
     Route::post('/mark-as-transferred/{attendance}', 'markAsTransferred');
+    Route::get('/slip', 'getSlip');
     Route::get('/by-attendance/{attendance}', 'getByAttendanceId');
 });
 

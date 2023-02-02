@@ -18,6 +18,11 @@ class AttendanceImportConfig extends Model
         return $this->hasMany(AttendanceSummary::class);
     }
 
+    public function attendanceSummaryByEmployeeId()
+    {
+        return $this->hasOne(AttendanceSummary::class)->where("employee_id", auth()->user()->employee->id);
+    }
+
     public function getPeriod()
     {
         $month = [

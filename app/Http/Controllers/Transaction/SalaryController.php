@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Transaction;
 
 use App\Http\Controllers\Controller;
+use App\Models\Attendance\AttendanceImportConfig;
 use App\Models\Attendance\AttendanceSummary;
 use App\Models\Attendance\Overtime;
 use App\Models\MasterData\Setting;
@@ -213,5 +214,23 @@ class SalaryController extends Controller
             DB::rollback();
             return $this->sendErrorResponse($e->getMessage());
         }
+    }
+
+    public function getSlip()
+    {
+        $this->data = AttendanceImportConfig::whereHas("attendanceSummaryByEmployeeId")
+        ->with("attendanceSummaryByEmployeeId")
+        ->get()
+        ->transform(function($data) {
+            return [
+                "id" => $data->attendanceSummaryByEmployeeId->id,
+                "month" => $this->_getMonthName($data->month),
+                "year" => $data->year,
+                "dayOfWork" => $data->day_of_work,
+                "startPeriod" => $data->start_period,
+                "endPeriod" => $data->end_period,
+            ];
+        });
+        return $this->sendResponse();
     }
 }

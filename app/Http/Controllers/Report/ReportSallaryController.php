@@ -35,23 +35,4 @@ class ReportSallaryController extends Controller
 
         return $this->sendResponse();
     }
-
-    private function _getMonthName ($monthNumber) {
-        $month = [
-            "01" => "Januari",
-            "02" => "Februari",
-            "03" => "Maret",
-            "04" => "April",
-            "05" => "Mei",
-            "06" => "Juni",
-            "07" => "Juli",
-            "07" => "Agustus",
-            "07" => "September",
-            "10" => "Oktober",
-            "11" => "November",
-            "12" => "Desember",
-        ];
-
-        return $month[$monthNumber];
-    }
 }
